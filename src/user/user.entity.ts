@@ -1,23 +1,19 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
-import { hashPasswordTransform } from 'src/common/helpers/crypto';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
-@Entity()
+@Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn()
-  @Field(() => ID)
-  id: string;
+  @Column()
+  @PrimaryColumn()
+  uid: string;
 
   @Column()
   name: string;
 
   @Column()
-  email: string;
+  cover_media: number;
 
-  @Column({
-    transformer: hashPasswordTransform,
-  })
-  @HideField()
-  password: string;
+  @Column()
+  is_public: boolean;
 }
