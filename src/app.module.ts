@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { SearchModule } from './search/search.module';
 import { MediaModule } from './media/media.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -15,6 +16,9 @@ import { MediaModule } from './media/media.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ req }),
+    }),
+    MulterModule.register({
+      dest: './tmp/uploads',
     }),
     UserModule,
     AuthModule,

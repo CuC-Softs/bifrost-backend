@@ -1,5 +1,12 @@
 import { InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsInt,
+} from 'class-validator';
 
 @InputType()
 export class UpdateUserInput {
@@ -8,13 +15,15 @@ export class UpdateUserInput {
   @IsOptional()
   name?: string;
 
-  @IsEmail()
   @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
   @IsOptional()
-  email?: string;
+  uid?: string;
 
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
+  @IsBoolean()
   @IsOptional()
-  password?: string;
+  isPublic?: boolean;
+
+  @IsInt()
+  @IsOptional()
+  coverMedia?: number;
 }

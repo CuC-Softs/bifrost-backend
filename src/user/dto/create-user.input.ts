@@ -1,5 +1,11 @@
 import { InputType } from '@nestjs/graphql';
-import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 @InputType()
 export class CreateUserInput {
@@ -12,13 +18,10 @@ export class CreateUserInput {
   uid: string;
 
   @IsInt()
-  cover_id: string;
+  @IsOptional()
+  coverMedia?: number;
 
   @IsBoolean()
-  @IsNotEmpty()
-  isPublic: boolean;
-
-  @IsInt()
-  @IsNotEmpty()
-  cover_media: string;
+  @IsOptional()
+  isPublic?: boolean;
 }

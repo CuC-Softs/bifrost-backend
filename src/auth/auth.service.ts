@@ -17,12 +17,6 @@ export class AuthService {
   async login(data: AuthInput): Promise<AuthType> {
     const user = await this.userService.getUserByEmail(data.email);
 
-    const valid = compareSync(data.password, user.password);
-
-    if (!valid) {
-      throw new UnauthorizedException('Incorrect password');
-    }
-
     const token = await this.jwtToken(user);
     return {
       user,
@@ -31,7 +25,7 @@ export class AuthService {
   }
 
   private async jwtToken(user: User): Promise<string> {
-    const payload = { username: user.name, sub: user.id };
+    const payload = { username: user.name, sub: user.uid };
     return this.jwtService.signAsync(payload);
   }
 }

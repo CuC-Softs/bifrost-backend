@@ -1,5 +1,13 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import Media from 'src/media/media.entity';
+import {
+  Column,
+  Entity,
+  PrimaryColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToMany,
+} from 'typeorm';
 
 @ObjectType()
 @Entity({ name: 'users' })
@@ -11,9 +19,13 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
-  cover_media: number;
+  @Column({ name: 'cover_media' })
+  coverMedia: number;
 
-  @Column()
-  is_public: boolean;
+  @Column({ name: 'is_public' })
+  isPublic: boolean;
+
+  @ManyToMany(() => User)
+  @JoinColumn({ name: 'follows' })
+  followedUsers: User[];
 }

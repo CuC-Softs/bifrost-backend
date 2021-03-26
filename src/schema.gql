@@ -3,9 +3,10 @@
 # ------------------------------------------------------
 
 type User {
-  id: ID!
+  uid: String!
   name: String!
-  email: String!
+  coverMedia: Float!
+  isPublic: Boolean!
 }
 
 type AuthType {
@@ -27,14 +28,16 @@ type Mutation {
 
 input CreateUserInput {
   name: String!
-  email: String!
-  password: String!
+  uid: String!
+  coverMedia: Float
+  isPublic: Boolean
 }
 
 input UpdateUserInput {
   name: String
-  email: String
-  password: String
+  uid: String
+  isPublic: Boolean
+  coverMedia: Float
 }
 
 input AuthInput {
