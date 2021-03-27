@@ -1,19 +1,13 @@
 import { InputType } from '@nestjs/graphql';
-import {
-  IsBoolean,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class CreateEntryInput{
+export class CreateEntryInput {
   @IsString()
-  @IsOptional()
-  type_fk?: String;
+  @IsNotEmpty()
+  type_fk: string;
 
   @IsString()
-  @IsOptional()
-  value?: String;
+  @IsNotEmpty()
+  value: string;
 }

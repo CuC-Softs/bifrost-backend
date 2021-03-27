@@ -6,14 +6,16 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Column } from 'typeorm';
 
 @InputType()
-export class CreateTourProfileInput {
+export class UpdateEntryInput {
   @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  user_id: string;
+  @IsNotEmpty()
+  @IsOptional()
+  type_fk?: string;
 
   @IsString()
-  name: string;
+  @IsNotEmpty()
+  @IsOptional()
+  value: string;
 }

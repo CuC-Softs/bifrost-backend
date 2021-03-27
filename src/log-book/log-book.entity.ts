@@ -13,13 +13,13 @@ import {
 @Entity({ name: 'logBooks' })
 export class LogBook {
   @Column()
-  name: String;
+  name: string;
 
   @Column()
-  @ManyToOne(() =>LogBook)
-  user_id: String;
+  @ManyToOne(() => LogBook)
+  user_id: string;
 
   @Column()
-  @OneToOne(() =>LogBook)
-  tour_id: Int16Array;
+  @OneToOne(() => LogBook)
+  tour_id: number;
 }

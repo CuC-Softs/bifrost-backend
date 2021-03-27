@@ -8,8 +8,8 @@ module.exports = {
   database: process.env.DB_NAME,
   entities: ['dist/**/*.entity{.ts,.js}'],
   type: 'postgres',
-  migrations: ['./src/db/migrations/*.ts'],
+  migrations: ['./db/migrations/*.ts'],
   cli: {
-    migrationsDir: './src/db/migrations',
+    migrationsDir: './db/migrations',
   },
 };

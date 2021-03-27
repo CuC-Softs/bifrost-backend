@@ -10,19 +10,19 @@ import {
 } from 'typeorm';
 
 @ObjectType()
-@Entity({name: 'tours'})
+@Entity({ name: 'tours' })
 export class Tour {
   @Column()
-  name: String;
+  name: string;
 
   @ManyToOne(() => Tour)
   @Column()
-  user_id: String;
+  user_id: string;
 
   @OneToOne(() => Tour)
   @Column()
-  tour_profile_id: Int16Array;
+  tour_profile_id: number;
 
   @Column()
-  isPublic: Boolean;
+  isPublic: boolean;
 }

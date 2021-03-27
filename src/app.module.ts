@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { SearchModule } from './search/search.module';
 import { MediaModule } from './media/media.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { RecommendationModule } from './recommendation/recommendation.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { MulterModule } from '@nestjs/platform-express';
     AuthModule,
     SearchModule,
     MediaModule,
+    RecommendationModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
