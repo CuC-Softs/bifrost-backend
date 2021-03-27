@@ -1,17 +1,16 @@
-import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { ObjectType } from '@nestjs/graphql';
 import {
     Column,
     Entity,
-    PrimaryColumn,
-    OneToOne,
     JoinColumn,
-    ManyToMany,
+    ManyToOne,
 } from 'typeorm';
 
 @ObjectType()
 @Entity({ name: 'reports' })
 export class Report {
-    @Column()
+    @ManyToOne(() =>Report)
+    @JoinColumn()
     user_id: string;
 
     @Column()
