@@ -11,6 +11,8 @@ import { MediaModule } from './media/media.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { RecommendationModule } from './recommendation/recommendation.module';
 import { ReportModule } from './report/report.module';
+import { CommentModule } from './comment/comment.module';
+import { VoteModule } from './vote/vote.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { ReportModule } from './report/report.module';
     MediaModule,
     RecommendationModule,
     ReportModule,
+    CommentModule,
+    VoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

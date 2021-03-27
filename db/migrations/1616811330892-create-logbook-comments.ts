@@ -5,9 +5,9 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class createLogbookReports1616808110327 implements MigrationInterface {
+export class createLogbookComments1616811330892 implements MigrationInterface {
   private table = new Table({
-    name: 'log_book_reports',
+    name: 'log_book_comments',
     columns: [
       {
         name: 'id',
@@ -22,7 +22,7 @@ export class createLogbookReports1616808110327 implements MigrationInterface {
         isNullable: false,
       },
       {
-        name: 'report_id',
+        name: 'comment_id',
         type: 'INTEGER',
         isNullable: false,
       },
@@ -50,17 +50,17 @@ export class createLogbookReports1616808110327 implements MigrationInterface {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
-  private foreignReportKey = new TableForeignKey({
-    columnNames: ['report_id'],
+  private foreignCommentKey = new TableForeignKey({
+    columnNames: ['comment_id'],
     referencedColumnNames: ['id'],
-    referencedTableName: 'reports',
+    referencedTableName: 'comments',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
     await queryRunner.createForeignKey(this.table, this.foreignLogBookrKey);
-    await queryRunner.createForeignKey(this.table, this.foreignReportKey);
+    await queryRunner.createForeignKey(this.table, this.foreignCommentKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
