@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { VideoEntryResolver } from './video-entry.resolver';
 import { VideoEntryService } from './video-entry.service';
+import { VideoEntryResolver } from './video-entry.resolver';
 
 @Module({
   providers: [VideoEntryResolver, VideoEntryService]

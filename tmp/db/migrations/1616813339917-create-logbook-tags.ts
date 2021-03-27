@@ -1,0 +1,70 @@
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
+
+export class createLogbookTags1616813339917 implements MigrationInterface {
+  private table = new Table({
+    name: 'log_book_tags',
+    columns: [
+      {
+        name: 'id',
+        type: 'integer',
+        isPrimary: true,
+        isGenerated: true,
+        generationStrategy: 'increment',
+      },
+      {
+        name: 'log_book_id',
+        type: 'INTEGER',
+        isNullable: false,
+      },
+      {
+        name: 'tag_id',
+        type: 'varchar',
+        length: '50',
+        isNullable: false,
+      },
+      {
+        name: 'created_at',
+        type: 'timestamptz',
+        isPrimary: false,
+        isNullable: false,
+        default: 'now()',
+      },
+      {
+        name: 'updated_at',
+        type: 'timestamptz',
+        isPrimary: false,
+        isNullable: false,
+        default: 'now()',
+      },
+    ],
+  });
+
+  private foreignLogBookrKey = new TableForeignKey({
+    columnNames: ['log_book_id'],
+    referencedColumnNames: ['id'],
+    referencedTableName: 'log_books',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+  private foreignTagKey = new TableForeignKey({
+    columnNames: ['tag_id'],
+    referencedColumnNames: ['name'],
+    referencedTableName: 'tags',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(this.table);
+    await queryRunner.createForeignKey(this.table, this.foreignLogBookrKey);
+    await queryRunner.createForeignKey(this.table, this.foreignTagKey);
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable(this.table);
+  }
+}

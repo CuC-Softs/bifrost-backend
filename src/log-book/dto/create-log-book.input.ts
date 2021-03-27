@@ -1,21 +1,7 @@
-import { InputType } from '@nestjs/graphql';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
-export class CreateLogBookInput{
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  name: String;
-
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  user_id: String;
-
-  @IsInt()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio '})
-  tour_id: Int16Array;
+export class CreateLogBookInput {
+  @Field(() => Int, { description: 'Example field (placeholder)' })
+  exampleField: number;
 }

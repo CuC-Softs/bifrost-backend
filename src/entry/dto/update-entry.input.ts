@@ -1,24 +1,16 @@
-import { InputType } from '@nestjs/graphql';
+import { InputType, PartialType } from '@nestjs/graphql';
 import {
   IsBoolean,
   IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsDate,
 } from 'class-validator';
+import { CreateEntryInput } from './create-entry.input';
 
 @InputType()
-export class UpdateEntryInput {
-  @IsString()
+export class UpdateEntryInput extends PartialType(CreateEntryInput) {
+  @IsInt()
   @IsOptional()
-  type_fk?: string;
-
-  @IsString()
-  @IsOptional()
-  value?: string;
-
-  @IsDate()
-  @IsOptional()
-  date?: Date;
+  order_in_list?: number;
 }

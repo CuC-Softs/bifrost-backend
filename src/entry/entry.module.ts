@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { EntryResolver } from './entry.resolver';
 import { EntryService } from './entry.service';
+import { EntryResolver } from './entry.resolver';
 
 @Module({
   providers: [EntryResolver, EntryService]

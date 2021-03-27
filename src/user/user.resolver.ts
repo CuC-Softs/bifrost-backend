@@ -1,14 +1,27 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
+import Media from 'src/media/media.entity';
+import { MediaService } from 'src/media/media.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { FollowsService } from './follows/follows.service';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
-@Resolver()
+@Resolver(() => User)
 export class UserResolver {
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private mediaService: MediaService,
+  ) {
     return;
   }
 
@@ -44,5 +57,15 @@ export class UserResolver {
   async deleteUser(@Args('id') id: string): Promise<string> {
     await this.userService.deleteUser(id);
     return 'user succefully deleted';
+  }
+
+  @ResolveField(() => Media, { nullable: true })
+  async cover(@Parent() user: User): Promise<Media> {
+    try {
+      const media = await this.mediaService.findMedia(user.coverMedia);
+      return media;
+    } catch (err) {
+      return null;
+    }
   }
 }

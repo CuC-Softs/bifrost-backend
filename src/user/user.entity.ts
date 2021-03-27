@@ -1,4 +1,6 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { LogBook } from 'src/log-book/entities/log-book.entity';
+import Media from 'src/media/media.entity';
 import {
   Column,
   Entity,
@@ -6,6 +8,8 @@ import {
   OneToOne,
   JoinColumn,
   ManyToMany,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 @ObjectType()
@@ -24,7 +28,28 @@ export class User {
   @Column({ name: 'is_public' })
   isPublic: boolean;
 
+  @OneToOne(() => Media)
+  @JoinColumn({ name: 'cover_media' })
+  @Field({ nullable: true })
+  cover: Media;
+
+  @Field()
+  followersCount: number;
+
   @ManyToMany(() => User)
-  @JoinColumn({ name: 'follows' })
+  @JoinTable({
+    name: 'follows',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'uid',
+    },
+    inverseJoinColumn: {
+      name: 'followed_id',
+      referencedColumnName: 'uid',
+    },
+  })
   followedUsers: User[];
+
+  @OneToMany(() => LogBook, (logBook) => logBook.owner)
+  logBooks: LogBook[];
 }

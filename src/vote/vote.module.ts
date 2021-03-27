@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { VoteResolver } from './vote.resolver';
 import { VoteService } from './vote.service';
+import { VoteResolver } from './vote.resolver';
 
 @Module({
   providers: [VoteResolver, VoteService]

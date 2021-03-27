@@ -2,11 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Media {
+  url: String!
+  id: Float!
+  path: String!
+  name: String!
+}
+
 type User {
+  cover: Media
+  followersCount: Float!
   uid: String!
   name: String!
   coverMedia: Float!
   isPublic: Boolean!
+  followedUsers: [User!]!
 }
 
 type AuthType {
@@ -23,6 +33,7 @@ type Mutation {
   createUser(data: CreateUserInput!): User!
   updateUser(data: UpdateUserInput!, id: String!): User!
   deleteUser(id: String!): String!
+  followUser(target: String!, id: String!): Boolean!
   login(data: AuthInput!): AuthType!
 }
 

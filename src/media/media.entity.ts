@@ -1,4 +1,4 @@
-import { ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -12,4 +12,9 @@ export default class Media {
 
   @Column()
   name: string;
+
+  @Field()
+  get url(): string {
+    return process.env.API_HOST + this.path;
+  }
 }

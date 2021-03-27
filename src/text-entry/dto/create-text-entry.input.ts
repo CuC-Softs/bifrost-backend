@@ -1,17 +1,18 @@
-import { InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsInt, IsString } from 'class-validator';
-
+import { InputType, Int, Field } from '@nestjs/graphql';
+import {
+  IsBoolean,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 @InputType()
 export class CreateTextEntryInput {
-    @IsInt()
-    @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-    media_fk: number;
+  @IsString()
+  @IsNotEmpty()
+  text: string;
 
-    @IsString()
-    @IsOptional()
-    text: string;
-
-    @IsInt()
-    @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-    entry_fk: number;
+  @IsInt()
+  @IsNotEmpty()
+  entry_fk: number;
 }

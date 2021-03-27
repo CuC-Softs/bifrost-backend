@@ -1,14 +1,8 @@
-import { InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { CreateTourProfileInput } from './create-tour-profile.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateTourProfileInput {
-  @IsString()
-  @IsOptional()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  user_id?: string;
-
-  @IsString()
-  @IsOptional()
-  name?: string;
+export class UpdateTourProfileInput extends PartialType(CreateTourProfileInput) {
+  @Field(() => Int)
+  id: number;
 }

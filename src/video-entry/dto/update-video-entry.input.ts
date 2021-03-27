@@ -1,9 +1,8 @@
-import { InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsInt, IsString } from 'class-validator';
+import { CreateVideoEntryInput } from './create-video-entry.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateVideoEntryInput {
-    @IsString()
-    @IsOptional()
-    location: string;
+export class UpdateVideoEntryInput extends PartialType(CreateVideoEntryInput) {
+  @Field(() => Int)
+  id: number;
 }

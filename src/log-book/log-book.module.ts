@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { LogBookResolver } from './log-book.resolver';
 import { LogBookService } from './log-book.service';
+import { LogBookResolver } from './log-book.resolver';
 
 @Module({
-  providers: [LogBookResolver, LogBookService]
+  providers: [LogBookResolver, LogBookService],
 })
-export class LogBookModule {}
+export class LogBookModule { }

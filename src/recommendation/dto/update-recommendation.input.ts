@@ -1,20 +1,8 @@
-import { InputType } from '@nestjs/graphql';
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { CreateRecommendationInput } from './create-recommendation.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateRecommendationInput {
-    @IsString()
-    @IsOptional()
-    @IsNotEmpty()
-    type?: string;
-
-    @IsString()
-    @IsOptional()
-    @IsNotEmpty()
-    value?: string;
-
-    @IsString()
-    @IsOptional()
-    @IsNotEmpty()
-    user_id?: string;
+export class UpdateRecommendationInput extends PartialType(CreateRecommendationInput) {
+  @Field(() => Int)
+  id: number;
 }

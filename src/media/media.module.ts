@@ -10,5 +10,7 @@ import Media from './media.entity';
   providers: [MediaService],
 
   controllers: [MediaController],
+
+  exports: [MediaService],
 })
 export class MediaModule { }

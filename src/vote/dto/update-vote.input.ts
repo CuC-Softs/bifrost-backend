@@ -1,10 +1,8 @@
-import { InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
+import { CreateVoteInput } from './create-vote.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateCommentInput {
-  @IsBoolean()
-  @IsOptional()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio' })
-  is_up: boolean;
+export class UpdateVoteInput extends PartialType(CreateVoteInput) {
+  @Field(() => Int)
+  id: number;
 }

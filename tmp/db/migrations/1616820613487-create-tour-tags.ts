@@ -5,9 +5,9 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class createTags1616804177051 implements MigrationInterface {
+export class createTourTags1616820613487 implements MigrationInterface {
   private table = new Table({
-    name: 'tags',
+    name: 'tour_tags',
     columns: [
       {
         name: 'id',
@@ -17,15 +17,14 @@ export class createTags1616804177051 implements MigrationInterface {
         generationStrategy: 'increment',
       },
       {
-        name: 'user_id',
+        name: 'tag_id',
         type: 'varchar',
-        length: '255',
+        length: '50',
         isNullable: false,
       },
       {
-        name: 'message',
-        type: 'varchar',
-        length: '255',
+        name: 'tour_id',
+        type: 'INTEGER',
         isNullable: false,
       },
       {
@@ -45,16 +44,24 @@ export class createTags1616804177051 implements MigrationInterface {
     ],
   });
 
-  private foreignUserKey = new TableForeignKey({
-    columnNames: ['user_id'],
-    referencedColumnNames: ['uid'],
-    referencedTableName: 'users',
+  private foreignTourKey = new TableForeignKey({
+    columnNames: ['tour_id'],
+    referencedColumnNames: ['id'],
+    referencedTableName: 'tours',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+  private foreignEntryKey = new TableForeignKey({
+    columnNames: ['tag_id'],
+    referencedColumnNames: ['name'],
+    referencedTableName: 'tags',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
-    await queryRunner.createForeignKey(this.table, this.foreignUserKey);
+    await queryRunner.createForeignKey(this.table, this.foreignTourKey);
+    await queryRunner.createForeignKey(this.table, this.foreignEntryKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

@@ -1,17 +1,7 @@
-import { InputType } from '@nestjs/graphql';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateRecommendationInput {
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  type: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  value: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'esse campo não pode estar vazio ' })
-  user_id: string;
+  @Field(() => Int, { description: 'Example field (placeholder)' })
+  exampleField: number;
 }

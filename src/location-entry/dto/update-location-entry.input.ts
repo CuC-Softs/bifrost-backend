@@ -1,9 +1,21 @@
-import { InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsInt, IsString } from 'class-validator';
-
+import { CreateLocationEntryInput } from './create-location-entry.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import {
+  IsBoolean,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 @InputType()
-export class UpdateLocationEntryInput {
-    @IsString()
-    @IsOptional()
-    location: string;
+export class UpdateLocationEntryInput extends PartialType(
+  CreateLocationEntryInput,
+) {
+  @IsString()
+  @IsOptional()
+  location: string;
+
+  @IsInt()
+  @IsOptional()
+  entry_fk: number;
 }

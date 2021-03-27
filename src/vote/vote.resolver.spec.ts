@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VoteResolver } from './vote.resolver';
+import { VoteService } from './vote.service';
 
 describe('VoteResolver', () => {
   let resolver: VoteResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [VoteResolver],
+      providers: [VoteResolver, VoteService],
     }).compile();
 
     resolver = module.get<VoteResolver>(VoteResolver);

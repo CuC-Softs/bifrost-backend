@@ -1,11 +1,8 @@
-import { InputType } from '@nestjs/graphql';
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { CreateReportInput } from './create-report.input';
+import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateReportInput{
-  
+export class UpdateReportInput extends PartialType(CreateReportInput) {
+  @Field(() => Int)
+  id: number;
 }
