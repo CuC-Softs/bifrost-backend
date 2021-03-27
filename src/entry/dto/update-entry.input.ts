@@ -5,17 +5,20 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsDate,
 } from 'class-validator';
 
 @InputType()
 export class UpdateEntryInput {
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   type_fk?: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
-  value: string;
+  value?: string;
+
+  @IsDate()
+  @IsOptional()
+  date?: Date;
 }

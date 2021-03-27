@@ -13,6 +13,10 @@ import { RecommendationModule } from './recommendation/recommendation.module';
 import { ReportModule } from './report/report.module';
 import { CommentModule } from './comment/comment.module';
 import { VoteModule } from './vote/vote.module';
+import { ImageEntryModule } from './image-entry/image-entry.module';
+import { VideoEntryModule } from './video-entry/video-entry.module';
+import { LocationEntryModule } from './location-entry/location-entry.module';
+import { TextEntryModule } from './text-entry/text-entry.module';
 
 @Module({
   imports: [
@@ -32,6 +36,10 @@ import { VoteModule } from './vote/vote.module';
     ReportModule,
     CommentModule,
     VoteModule,
+    ImageEntryModule,
+    VideoEntryModule,
+    LocationEntryModule,
+    TextEntryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
