@@ -12,6 +12,10 @@ import { LogBook } from 'src/log-book/entities/log-book.entity';
 import { LogBookService } from 'src/log-book/log-book.service';
 import Media from 'src/media/media.entity';
 import { MediaService } from 'src/media/media.service';
+import { Recommendation } from 'src/recommendation/entities/recommendation.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
+import { RecommendationService } from 'src/recommendation/recommendation.service';
+import { CommentService } from 'src/comment/comment.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { FollowsService } from './follows/follows.service';
@@ -24,6 +28,8 @@ export class UserResolver {
     private userService: UserService,
     private logBookService: LogBookService,
     private mediaService: MediaService,
+    private recommendationService: RecommendationService,
+    private commentService: CommentService,
   ) {
     return;
   }
@@ -75,5 +81,15 @@ export class UserResolver {
   @ResolveField(() => LogBook)
   async logBooks(@Parent() user: User): Promise<LogBook[]> {
     return this.logBookService.findByUserId(user.uid);
+  }
+
+  @ResolveField(() => Recommendation)
+  async recommendations(@Parent() user: User): Promise<Recommendation[]> {
+    return this.recommendationService.findByUserId(user.uid);
+  }
+
+  @ResolveField(() => Comment)
+  async comments(@Parent() user: User): Promise<Comment[]> {
+    return this.commentService.findByUserId(user.uid);
   }
 }

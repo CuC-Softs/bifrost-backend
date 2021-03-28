@@ -10,11 +10,11 @@ import {
 
 @InputType()
 export class UpdateCommentInput extends PartialType(CreateCommentInput) {
-  @IsInt()
+  @IsString()
   @IsOptional()
-  comment_id?: number;
+  user_id?: string;
 
   @IsString()
   @IsOptional()
-  text?: string;
+  message?: string;
 }

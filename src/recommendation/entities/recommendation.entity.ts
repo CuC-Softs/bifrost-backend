@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { User } from 'src/user/user.entity';
 import {
   Column,
   Entity,
@@ -8,10 +9,11 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({ name: 'recommendations' })
+@Entity({ name: 'recomendations' })
 @ObjectType()
 export class Recommendation {
   @PrimaryGeneratedColumn()
@@ -25,4 +27,8 @@ export class Recommendation {
 
   @Column()
   user_id: string;
+
+  @ManyToOne(() => User, (user) => user.recommendations)
+  @JoinColumn({ name: 'user_id' })
+  owner: User;
 }

@@ -16,5 +16,5 @@ export class UpdateTextEntryInput extends PartialType(CreateTextEntryInput) {
 
   @IsInt()
   @IsOptional()
-  entry_fk?: number;
+  entry_id?: number;
 }

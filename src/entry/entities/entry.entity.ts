@@ -1,5 +1,9 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ImageEntry } from 'src/image-entry/entities/image-entry.entity';
+import { LocationEntry } from 'src/location-entry/entities/location-entry.entity';
 import Media from 'src/media/media.entity';
+import { TextEntry } from 'src/text-entry/entities/text-entry.entity';
+import { VideoEntry } from 'src/video-entry/entities/video-entry.entity';
 import {
   Column,
   Entity,
@@ -22,4 +26,20 @@ export class Entry {
 
   @Column({ type: 'date' })
   date: Date;
+
+  @OneToOne(() => VideoEntry)
+  @JoinColumn({ name: 'id' })
+  video_entry: VideoEntry;
+
+  @OneToOne(() => TextEntry)
+  @JoinColumn({ name: 'id' })
+  text_entry: TextEntry;
+
+  @OneToOne(() => ImageEntry)
+  @JoinColumn({ name: 'id' })
+  image_entry: ImageEntry;
+
+  @OneToOne(() => LocationEntry)
+  @JoinColumn({ name: 'id' })
+  location_entry: LocationEntry;
 }

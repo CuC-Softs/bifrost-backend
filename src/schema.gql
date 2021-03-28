@@ -17,6 +17,29 @@ type LogBook {
   owner: User!
 }
 
+type Recommendation {
+  id: Float!
+  type: String!
+  value: String!
+  user_id: String!
+  owner: User!
+}
+
+type Comment {
+  id: Float!
+  user_id: String!
+  message: String!
+  owner: User!
+}
+
+type Report {
+  id: Float!
+  user_id: String!
+  type: String!
+  justification: String!
+  owner: User!
+}
+
 type User {
   cover: Media
   followersCount: Float!
@@ -26,18 +49,14 @@ type User {
   isPublic: Boolean!
   followedUsers: [User!]!
   logBooks: [LogBook!]!
+  recommendations: [Recommendation!]!
+  comments: [Comment!]!
+  reports: [Report!]!
 }
 
 type AuthType {
   user: User!
   token: String!
-}
-
-type Recommendation {
-  id: Float!
-  type: String!
-  value: String!
-  user_id: String!
 }
 
 type TourProfile {
@@ -60,29 +79,10 @@ type Tour {
   description: String!
 }
 
-type Report {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-type Comment {
-  id: Float!
-  comment_id: Float!
-  text: String!
-}
-
 type Vote {
   id: Float!
   user_id: String!
   is_public: Boolean!
-}
-
-type ImageEntry {
-  id: Float!
-  media_fk: Float!
-  location: String!
-  entry_fk: Float!
-  image: Media!
 }
 
 type VideoEntry {
@@ -90,24 +90,31 @@ type VideoEntry {
   media_id: Float!
   entry_id: Float!
   location: String!
-}
-
-type LocationEntry {
-  id: Float!
-  location: String!
-  entry_fk: Float!
+  entry: Entry!
 }
 
 type TextEntry {
   id: Float!
   text: String!
-  entry_fk: Float!
+  entry_id: Float!
+  entry: Entry!
+}
+
+type LocationEntry {
+  id: Float!
+  location: String!
+  entry_id: Float!
+  entry: Entry!
 }
 
 type Entry {
   id: Float!
   order_in_list: Float!
   date: DateTime!
+  video_entry: VideoEntry!
+  text_entry: TextEntry!
+  image_entry: ImageEntry!
+  location_entry: LocationEntry!
 }
 
 """
@@ -115,13 +122,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type ImageEntry {
+  id: Float!
+  media_id: Float!
+  location: String!
+  entry_id: Float!
+  image: Media!
+  entry: Entry!
+}
+
 type Query {
   indexUsers: [User!]!
   getUser(id: String!): User
   logBook(id: Int!): LogBook!
   recommendation(id: Int!): Recommendation!
-  report(id: Int!): Report!
   comment(id: Int!): Comment!
+  report(id: Int!): Report!
   vote(id: Int!): Vote!
   imageEntry(id: Int!): ImageEntry!
   videoEntry(id: Int!): VideoEntry!
@@ -140,16 +156,16 @@ type Mutation {
   createLogBook(createLogBookInput: CreateLogBookInput!): LogBook!
   updateLogBook(updateLogBookInput: UpdateLogBookInput!, id: Float!): LogBook!
   removeLogBook(id: Int!): Boolean!
-  login(data: AuthInput!): AuthType!
   createRecommendation(createRecommendationInput: CreateRecommendationInput!): Recommendation!
   updateRecommendation(updateRecommendationInput: UpdateRecommendationInput!, id: Float!): Recommendation!
   removeRecommendation(id: Int!): Recommendation!
-  createReport(createReportInput: CreateReportInput!): Report!
-  updateReport(updateReportInput: UpdateReportInput!): Report!
-  removeReport(id: Int!): Report!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   updateComment(updateCommentInput: UpdateCommentInput!, id: Float!): Comment!
   removeComment(id: Int!): Comment!
+  createReport(createReportInput: CreateReportInput!): Report!
+  updateReport(updateReportInput: UpdateReportInput!, id: Float!): Report!
+  removeReport(id: Int!): Report!
+  login(data: AuthInput!): AuthType!
   createVote(createVoteInput: CreateVoteInput!): Vote!
   updateVote(updateVoteInput: UpdateVoteInput!, id: Float!): Vote!
   removeVote(id: Int!): Vote!
@@ -167,7 +183,7 @@ type Mutation {
   removeTextEntry(id: Int!): TextEntry!
   createEntry(createEntryInput: CreateEntryInput!): Entry!
   updateEntry(updateEntryInput: UpdateEntryInput!, id: Float!): Entry!
-  removeEntry(id: Int!): Entry!
+  removeEntry(id: Int!): Boolean!
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!, id: Float!): Tour!
   removeTour(id: Int!): Tour!
@@ -204,11 +220,6 @@ input UpdateLogBookInput {
   description: String
 }
 
-input AuthInput {
-  email: String!
-  password: String!
-}
-
 input CreateRecommendationInput {
   type: String!
   value: String!
@@ -221,25 +232,32 @@ input UpdateRecommendationInput {
   user_id: String
 }
 
-input CreateReportInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateReportInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
 input CreateCommentInput {
-  comment_id: Float!
-  text: String!
+  suer_id: String!
+  message: String!
 }
 
 input UpdateCommentInput {
-  comment_id: Float
-  text: String
+  suer_id: String
+  message: String
+  user_id: String
+}
+
+input CreateReportInput {
+  user_id: String!
+  type: String!
+  justification: String!
+}
+
+input UpdateReportInput {
+  user_id: String!
+  type: String!
+  justification: String!
+}
+
+input AuthInput {
+  email: String!
+  password: String!
 }
 
 input CreateVoteInput {
@@ -253,15 +271,15 @@ input UpdateVoteInput {
 }
 
 input CreateImageEntryInput {
-  media_fk: Float!
+  media_id: Float!
   location: String!
-  entry_fk: Float!
+  entry_id: Float!
 }
 
 input UpdateImageEntryInput {
-  media_fk: Float
+  media_id: Float
   location: String
-  entry_fk: Float
+  entry_id: Float
 }
 
 input CreateVideoEntryInput {
@@ -278,22 +296,22 @@ input UpdateVideoEntryInput {
 
 input CreateLocationEntryInput {
   location: String!
-  entry_fk: Float!
+  entry_id: Float!
 }
 
 input UpdateLocationEntryInput {
   location: String
-  entry_fk: Float
+  entry_id: Float
 }
 
 input CreateTextEntryInput {
   text: String!
-  entry_fk: Float!
+  entry_id: Float!
 }
 
 input UpdateTextEntryInput {
   text: String
-  entry_fk: Float
+  entry_id: Float
 }
 
 input CreateEntryInput {

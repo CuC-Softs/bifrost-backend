@@ -13,4 +13,12 @@ export class UpdateImageEntryInput extends PartialType(CreateImageEntryInput) {
   @IsString()
   @IsOptional()
   location?: string;
+
+  @IsInt()
+  @IsOptional()
+  media_id?: number;
+
+  @IsInt()
+  @IsOptional()
+  entry_id?: number;
 }

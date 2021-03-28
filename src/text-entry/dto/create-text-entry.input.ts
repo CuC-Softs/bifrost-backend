@@ -14,5 +14,5 @@ export class CreateTextEntryInput {
 
   @IsInt()
   @IsNotEmpty()
-  entry_fk: number;
+  entry_id: number;
 }

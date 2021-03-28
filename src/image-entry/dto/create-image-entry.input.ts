@@ -10,7 +10,7 @@ import {
 export class CreateImageEntryInput {
   @IsInt()
   @IsNotEmpty()
-  media_fk: number;
+  media_id: number;
 
   @IsString()
   @IsNotEmpty()
@@ -18,5 +18,5 @@ export class CreateImageEntryInput {
 
   @IsInt()
   @IsNotEmpty()
-  entry_fk: number;
+  entry_id: number;
 }

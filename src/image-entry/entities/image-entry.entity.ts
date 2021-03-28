@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entry } from 'src/entry/entities/entry.entity';
 import Media from 'src/media/media.entity';
 import {
   Column,
@@ -18,15 +19,19 @@ export class ImageEntry {
   id: number;
 
   @Column()
-  media_fk: number;
+  media_id: number;
 
   @Column()
   location: string;
 
   @Column()
-  entry_fk: number;
+  entry_id: number;
 
   @OneToOne(() => Media)
   @JoinColumn()
   image: Media;
+
+  @OneToOne(() => Entry)
+  @JoinColumn({ name: 'entry_id' })
+  entry: Entry;
 }

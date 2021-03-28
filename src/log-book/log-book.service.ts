@@ -55,10 +55,14 @@ export class LogBookService {
     }
   }
 
+  //get all logbooks from an existing user
   async findByUserId(userId: string): Promise<LogBook[]> {
+    //fetches all logbooks from an existing user
     const logbooks = await this.logBookRepository.find({
+      //is the field used to retrieve the logbook with custom search
       where: { user_id: userId },
     });
+    //return the log-book.
     return logbooks;
   }
 }

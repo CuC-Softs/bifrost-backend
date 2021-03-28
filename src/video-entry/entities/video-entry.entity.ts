@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entry } from 'src/entry/entities/entry.entity';
 import Media from 'src/media/media.entity';
 import {
   Column,
@@ -26,4 +27,8 @@ export class VideoEntry {
 
   @Column()
   location: string;
+
+  @OneToOne(() => Entry)
+  @JoinColumn({ name: 'entry_id' })
+  entry: Entry;
 }

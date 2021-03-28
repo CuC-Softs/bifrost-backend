@@ -14,5 +14,5 @@ export class CreateLocationEntryInput {
 
   @IsInt()
   @IsNotEmpty()
-  entry_fk: number;
+  entry_id: number;
 }

@@ -1,6 +1,8 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
 import { LogBook } from 'src/log-book/entities/log-book.entity';
 import Media from 'src/media/media.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
+import { Recommendation } from 'src/recommendation/entities/recommendation.entity';
 import {
   Column,
   Entity,
@@ -11,6 +13,7 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
+import { Report } from 'src/report/entities/report.entity';
 
 @ObjectType()
 @Entity({ name: 'users' })
@@ -52,4 +55,13 @@ export class User {
 
   @OneToMany(() => LogBook, (logBook) => logBook.owner)
   logBooks: LogBook[];
+
+  @OneToMany(() => Recommendation, (recommendation) => recommendation.owner)
+  recommendations: Recommendation[];
+
+  @OneToMany(() => Comment, (comment) => comment.owner)
+  comments: Comment[];
+
+  @OneToMany(() => Report, (report) => report.owner)
+  reports: Report[];
 }

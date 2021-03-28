@@ -9,11 +9,11 @@ import {
 
 @InputType()
 export class CreateCommentInput {
-  @IsInt()
+  @IsString()
   @IsNotEmpty()
-  comment_id: number;
+  suer_id: string;
 
   @IsString()
   @IsNotEmpty()
-  text: string;
+  message: string;
 }

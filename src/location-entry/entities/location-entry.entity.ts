@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entry } from 'src/entry/entities/entry.entity';
 import {
   Column,
   Entity,
@@ -20,5 +21,9 @@ export class LocationEntry {
   location: string;
 
   @Column()
-  entry_fk: number;
+  entry_id: number;
+
+  @OneToOne(() => Entry)
+  @JoinColumn({ name: 'entry_id' })
+  entry: Entry;
 }

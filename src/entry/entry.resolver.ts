@@ -6,33 +6,42 @@ import { UpdateEntryInput } from './dto/update-entry.input';
 
 @Resolver(() => Entry)
 export class EntryResolver {
-  constructor(private readonly entryService: EntryService) { }
+  constructor(private readonly entryService: EntryService) {
+    return;
+  }
 
   @Mutation(() => Entry)
-  createEntry(@Args('createEntryInput') createEntryInput: CreateEntryInput) {
+  async createEntry(
+    @Args('createEntryInput') createEntryInput: CreateEntryInput,
+  ) {
     return this.entryService.create(createEntryInput);
   }
 
   @Query(() => [Entry], { name: 'entry' })
-  findAll() {
+  async findAll() {
     return this.entryService.findAll();
   }
 
   @Query(() => Entry, { name: 'entry' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  async findOne(@Args('id', { type: () => Int }) id: number) {
     return this.entryService.findOne(id);
   }
 
   @Mutation(() => Entry)
-  updateEntry(
+  async updateEntry(
     @Args('id') id: number,
     @Args('updateEntryInput') updateEntryInput: UpdateEntryInput,
   ) {
     return this.entryService.update(id, updateEntryInput);
   }
 
-  @Mutation(() => Entry)
-  removeEntry(@Args('id', { type: () => Int }) id: number) {
-    return this.entryService.remove(id);
+  @Mutation(() => Boolean)
+  async removeEntry(@Args('id', { type: () => Int }) id: number) {
+    try {
+      await this.entryService.remove(id);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }

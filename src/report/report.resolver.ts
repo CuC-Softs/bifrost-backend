@@ -6,10 +6,12 @@ import { UpdateReportInput } from './dto/update-report.input';
 
 @Resolver(() => Report)
 export class ReportResolver {
-  constructor(private readonly reportService: ReportService) {}
+  constructor(private readonly reportService: ReportService) { }
 
   @Mutation(() => Report)
-  createReport(@Args('createReportInput') createReportInput: CreateReportInput) {
+  createReport(
+    @Args('createReportInput') createReportInput: CreateReportInput,
+  ) {
     return this.reportService.create(createReportInput);
   }
 
@@ -24,8 +26,11 @@ export class ReportResolver {
   }
 
   @Mutation(() => Report)
-  updateReport(@Args('updateReportInput') updateReportInput: UpdateReportInput) {
-    return this.reportService.update(updateReportInput.id, updateReportInput);
+  updateReport(
+    @Args('id') id: number,
+    @Args('updateReportInput') updateReportInput: UpdateReportInput,
+  ) {
+    return this.reportService.update(id, updateReportInput);
   }
 
   @Mutation(() => Report)
