@@ -6,7 +6,9 @@ import { UpdateReportInput } from './dto/update-report.input';
 
 @Resolver(() => Report)
 export class ReportResolver {
-  constructor(private readonly reportService: ReportService) { }
+  constructor(private readonly reportService: ReportService) {
+    return;
+  }
 
   @Mutation(() => Report)
   createReport(

@@ -10,6 +10,7 @@ import { LogBookModule } from 'src/log-book/log-book.module';
 import { RecommendationModule } from 'src/recommendation/recommendation.module';
 import { CommentModule } from 'src/comment/comment.module';
 import { ReportModule } from 'src/report/report.module';
+import { TourModule } from 'src/tour/tour.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ReportModule } from 'src/report/report.module';
     RecommendationModule,
     CommentModule,
     ReportModule,
+    TourModule,
   ],
   providers: [UserService, UserResolver, FollowsService, FollowsResolver],
 })

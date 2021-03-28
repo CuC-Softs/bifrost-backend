@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 @InputType()
 export class CreateTourProfileInput {
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  user_id: string;
+  tour_id: number;
 }

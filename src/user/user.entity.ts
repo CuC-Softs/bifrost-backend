@@ -14,6 +14,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Report } from 'src/report/entities/report.entity';
+import { Tour } from 'src/tour/entities/tour.entity';
+import { Vote } from 'src/vote/entities/vote.entity';
 
 @ObjectType()
 @Entity({ name: 'users' })
@@ -64,4 +66,10 @@ export class User {
 
   @OneToMany(() => Report, (report) => report.owner)
   reports: Report[];
+
+  @OneToMany(() => Tour, (tour) => tour.owner)
+  tours: Tour[];
+
+  @OneToMany(() => Vote, (vote) => vote.owner)
+  votes: Vote[];
 }

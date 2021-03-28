@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateTourInput } from './dto/create-tour.input';
 import { UpdateTourInput } from './dto/update-tour.input';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Tour } from './entities/tour.entity';
 @Injectable()
 export class TourService {
-  create(createTourInput: CreateTourInput) {
-    return 'This action adds a new tour';
+  constructor(
+    @InjectRepository(Tour)
+    private tourRepository: Repository<Tour>,
+  ) {
+    return;
   }
 
-  findAll() {
-    return `This action returns all tour`;
+  async create(createTourInput: CreateTourInput) {
+    const tour = this.tourRepository.create(createTourInput);
+    const saved = await this.tourRepository.save(tour);
+    return saved;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tour`;
+  async findAll() {
+    const tours = await this.tourRepository.find();
+    return tours;
   }
 
-  update(id: number, updateTourInput: UpdateTourInput) {
-    return `This action updates a #${id} tour`;
+  async findOne(id: number) {
+    try {
+      const tour = await this.tourRepository.findOneOrFail(id);
+      return tour;
+    } catch (err) {
+      throw new BadRequestException('Tour not found');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tour`;
+  async update(id: number, updateTourInput: UpdateTourInput) {
+    try {
+      const tour = await this.tourRepository.findOneOrFail(id);
+      Object.assign(Tour, updateTourInput);
+      const saved = await this.tourRepository.save(tour);
+      return saved;
+    } catch (error) {
+      throw new BadRequestException('Tour not found');
+    }
+  }
+
+  async remove(id: number) {
+    try {
+      const tour = await this.tourRepository.findOneOrFail(id);
+      await this.tourRepository.remove(tour);
+    } catch (error) {
+      throw new BadRequestException('Tour not found');
+    }
+  }
+
+  async findByUserId(userId: string): Promise<Tour[]> {
+    return await this.tourRepository.find({
+      where: { user_id: userId },
+    });
   }
 }

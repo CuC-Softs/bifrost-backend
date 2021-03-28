@@ -11,7 +11,7 @@ import {
 export class UpdateTourProfileInput extends PartialType(
   CreateTourProfileInput,
 ) {
-  @IsString()
+  @IsInt()
   @IsOptional()
-  user_id?: string;
+  tour_id?: number;
 }

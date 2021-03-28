@@ -9,18 +9,25 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import JSONa from 'graphql-type-json';
+import { Tour } from 'src/tour/entities/tour.entity';
 @ObjectType()
+@Entity({ name: 'tour_profiles' })
 export class TourProfile {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  user_id: string;
+  tour_id: number;
 
   @Field(() => JSONa)
-  @Column()
-  values: any;
+  @Column({ type: 'jsonb' })
+  values: JSON;
+
+  @ManyToOne(() => Tour, (tour) => tour.tour_profiles)
+  @JoinColumn({ name: 'tour_id' })
+  owner: Tour;
 }

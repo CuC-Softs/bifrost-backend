@@ -40,29 +40,12 @@ type Report {
   owner: User!
 }
 
-type User {
-  cover: Media
-  followersCount: Float!
-  uid: String!
-  name: String!
-  coverMedia: Float!
-  isPublic: Boolean!
-  followedUsers: [User!]!
-  logBooks: [LogBook!]!
-  recommendations: [Recommendation!]!
-  comments: [Comment!]!
-  reports: [Report!]!
-}
-
-type AuthType {
-  user: User!
-  token: String!
-}
-
 type TourProfile {
   values: JSON!
   id: Float!
-  user_id: String!
+  tag_id: String!
+  tour_id: Float!
+  owner: Tour!
 }
 
 """
@@ -77,6 +60,28 @@ type Tour {
   tour_profile_id: Float!
   is_public: Boolean!
   description: String!
+  owner: User!
+  tour_profiles: [TourProfile!]!
+}
+
+type User {
+  cover: Media
+  followersCount: Float!
+  uid: String!
+  name: String!
+  coverMedia: Float!
+  isPublic: Boolean!
+  followedUsers: [User!]!
+  logBooks: [LogBook!]!
+  recommendations: [Recommendation!]!
+  comments: [Comment!]!
+  reports: [Report!]!
+  tours: [Tour!]!
+}
+
+type AuthType {
+  user: User!
+  token: String!
 }
 
 type Vote {
@@ -138,13 +143,13 @@ type Query {
   recommendation(id: Int!): Recommendation!
   comment(id: Int!): Comment!
   report(id: Int!): Report!
+  tour(id: Int!): Tour!
   vote(id: Int!): Vote!
   imageEntry(id: Int!): ImageEntry!
   videoEntry(id: Int!): VideoEntry!
   locationEntry(id: Int!): LocationEntry!
   textEntry(id: Int!): TextEntry!
   entry(id: Int!): Entry!
-  tour(id: Int!): Tour!
   tourProfile(id: Int!): TourProfile!
 }
 
@@ -165,6 +170,9 @@ type Mutation {
   createReport(createReportInput: CreateReportInput!): Report!
   updateReport(updateReportInput: UpdateReportInput!, id: Float!): Report!
   removeReport(id: Int!): Report!
+  createTour(createTourInput: CreateTourInput!): Tour!
+  updateTour(updateTourInput: UpdateTourInput!, id: Float!): Tour!
+  removeTour(id: Int!): Tour!
   login(data: AuthInput!): AuthType!
   createVote(createVoteInput: CreateVoteInput!): Vote!
   updateVote(updateVoteInput: UpdateVoteInput!, id: Float!): Vote!
@@ -184,9 +192,6 @@ type Mutation {
   createEntry(createEntryInput: CreateEntryInput!): Entry!
   updateEntry(updateEntryInput: UpdateEntryInput!, id: Float!): Entry!
   removeEntry(id: Int!): Boolean!
-  createTour(createTourInput: CreateTourInput!): Tour!
-  updateTour(updateTourInput: UpdateTourInput!, id: Float!): Tour!
-  removeTour(id: Int!): Tour!
   createTourProfile(createTourProfileInput: CreateTourProfileInput!): TourProfile!
   updateTourProfile(updateTourProfileInput: UpdateTourProfileInput!, id: Float!): TourProfile!
   removeTourProfile(id: Int!): TourProfile!
@@ -253,6 +258,22 @@ input UpdateReportInput {
   user_id: String!
   type: String!
   justification: String!
+}
+
+input CreateTourInput {
+  name: String!
+  user_id: String!
+  tour_profile_id: Float!
+  is_public: Boolean!
+  description: String!
+}
+
+input UpdateTourInput {
+  name: String
+  user_id: String
+  tour_profile_id: Float
+  is_public: Boolean
+  description: String
 }
 
 input AuthInput {
@@ -324,26 +345,12 @@ input UpdateEntryInput {
   date: DateTime
 }
 
-input CreateTourInput {
-  name: String!
-  user_id: String!
-  tour_profile_id: Float!
-  is_public: Boolean!
-  description: String!
-}
-
-input UpdateTourInput {
-  name: String
-  user_id: String
-  tour_profile_id: Float
-  is_public: Boolean
-  description: String
-}
-
 input CreateTourProfileInput {
-  user_id: String!
+  tag_id: String!
+  tour_id: Float!
 }
 
 input UpdateTourProfileInput {
-  user_id: String
+  tag_id: String
+  tour_id: Float
 }

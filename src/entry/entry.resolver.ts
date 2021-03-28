@@ -1,12 +1,31 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { EntryService } from './entry.service';
 import { Entry } from './entities/entry.entity';
 import { CreateEntryInput } from './dto/create-entry.input';
 import { UpdateEntryInput } from './dto/update-entry.input';
+import { VideoEntry } from 'src/video-entry/entities/video-entry.entity';
+import { VideoEntryService } from 'src/video-entry/video-entry.service';
+import { ImageEntryService } from 'src/image-entry/image-entry.service';
+import { TextEntryService } from 'src/text-entry/text-entry.service';
+import { LocationEntryService } from 'src/location-entry/location-entry.service';
 
 @Resolver(() => Entry)
 export class EntryResolver {
-  constructor(private readonly entryService: EntryService) {
+  constructor(
+    private readonly entryService: EntryService,
+    private videoEntryService: VideoEntryService,
+    private imageEntryService: ImageEntryService,
+    private textEntryService: TextEntryService,
+    private locationEntryService: LocationEntryService,
+  ) {
     return;
   }
 
@@ -33,6 +52,11 @@ export class EntryResolver {
     @Args('updateEntryInput') updateEntryInput: UpdateEntryInput,
   ) {
     return this.entryService.update(id, updateEntryInput);
+  }
+
+  @ResolveField(() => VideoEntry)
+  async video_entry(@Parent() user: Entry): Promise<VideoEntry[]> {
+    // return this.videoEntryService.findOne();
   }
 
   @Mutation(() => Boolean)

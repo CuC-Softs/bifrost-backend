@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateVoteInput } from './dto/create-vote.input';
 import { UpdateVoteInput } from './dto/update-vote.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Vote } from './entities/vote.entity';
 
 @Injectable()
 export class VoteService {
-  create(createVoteInput: CreateVoteInput) {
-    return 'This action adds a new vote';
+  constructor(
+    @InjectRepository(Vote)
+    private voteRepository: Repository<Vote>,
+  ) {
+    return;
   }
 
-  findAll() {
-    return `This action returns all vote`;
+  async create(createVoteInput: CreateVoteInput) {
+    const vote = this.voteRepository.create(createVoteInput);
+    const saved = await this.voteRepository.save(vote);
+    return saved;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vote`;
+  async findAll() {
+    const votes = await this.voteRepository.find();
+    return votes;
   }
 
-  update(id: number, updateVoteInput: UpdateVoteInput) {
-    return `This action updates a #${id} vote`;
+  async findOne(id: number) {
+    try {
+      const vote = await this.voteRepository.findOneOrFail(id);
+      return vote;
+    } catch (err) {
+      throw new BadRequestException('Vote not found');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vote`;
+  async update(id: number, updateVoteInput: UpdateVoteInput) {
+    try {
+      const vote = await this.voteRepository.findOneOrFail(id);
+      Object.assign(Vote, updateVoteInput);
+      const saved = await this.voteRepository.save(vote);
+      return saved;
+    } catch (error) {
+      throw new BadRequestException('Vote not found');
+    }
+  }
+
+  async remove(id: number) {
+    try {
+      const vote = await this.voteRepository.findOneOrFail(id);
+      await this.voteRepository.remove(vote);
+    } catch (error) {
+      throw new BadRequestException('Vote not found');
+    }
+  }
+
+  async findByUserId(userId: string): Promise<Vote[]> {
+    return await this.voteRepository.find({
+      where: { user_id: userId },
+    });
   }
 }
