@@ -56,7 +56,7 @@ export class EntryResolver {
 
   @ResolveField(() => VideoEntry)
   async video_entry(@Parent() user: Entry): Promise<VideoEntry[]> {
-    // return this.videoEntryService.findOne();
+    return this.videoEntryService.findOne();
   }
 
   @Mutation(() => Boolean)

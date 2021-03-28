@@ -9,4 +9,4 @@ import { TourProfile } from './entities/tour-profile.entity';
   providers: [TourProfileResolver, TourProfileService],
   exports: [TourProfileService],
 })
-export class TourProfileModule { }
+export class TourProfileModule {}

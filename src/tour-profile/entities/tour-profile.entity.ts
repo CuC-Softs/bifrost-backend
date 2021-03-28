@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Tour } from 'src/tour/entities/tour.entity';
 import {
   Column,
   Entity,

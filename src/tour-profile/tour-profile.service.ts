@@ -4,20 +4,17 @@ import { UpdateTourProfileInput } from './dto/update-tour-profile.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TourProfile } from './entities/tour-profile.entity';
-import { Tour } from 'src/tour/entities/tour.entity';
-import { CreateTourInput } from 'src/tour/dto/create-tour.input';
-import { UpdateTourInput } from 'src/tour/dto/update-tour.input';
-import { TourResolver } from 'src/tour/tour.resolver';
+
 @Injectable()
 export class TourProfileService {
   constructor(
-    @InjectRepository(TourResolver)
-    private tourProfileRepository: Repository<TourResolver>,
+    @InjectRepository(TourProfile)
+    private tourProfileRepository: Repository<TourProfile>,
   ) {
     return;
   }
 
-  async create(createTourProfileInput: CreateTourInput) {
+  async create(createTourProfileInput: CreateTourProfileInput) {
     const tour_profile = this.tourProfileRepository.create(
       createTourProfileInput,
     );
@@ -39,13 +36,11 @@ export class TourProfileService {
     }
   }
 
-  async update(id: number, updateTourInput: UpdateTourInput) {
+  async update(id: number, updateTourInput: UpdateTourProfileInput) {
     try {
       const tour_profile = await this.tourProfileRepository.findOneOrFail(id);
       Object.assign(TourProfile, updateTourInput);
-      const saved = await this.tourProfileRepository.save(
-        tourtour_profileProfile,
-      );
+      const saved = await this.tourProfileRepository.save(tour_profile);
       return saved;
     } catch (error) {
       throw new BadRequestException('Tour Profile not found');
