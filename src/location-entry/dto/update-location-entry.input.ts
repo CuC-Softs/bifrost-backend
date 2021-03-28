@@ -13,9 +13,9 @@ export class UpdateLocationEntryInput extends PartialType(
 ) {
   @IsString()
   @IsOptional()
-  location: string;
+  location?: string;
 
   @IsInt()
   @IsOptional()
-  entry_fk: number;
+  entry_fk?: number;
 }

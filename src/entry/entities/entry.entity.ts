@@ -19,4 +19,7 @@ export class Entry {
 
   @Column()
   order_in_list: number;
+
+  @Column({ type: 'date' })
+  date: Date;
 }

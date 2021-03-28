@@ -6,10 +6,13 @@ import { UpdateTourProfileInput } from './dto/update-tour-profile.input';
 
 @Resolver(() => TourProfile)
 export class TourProfileResolver {
-  constructor(private readonly tourProfileService: TourProfileService) {}
+  constructor(private readonly tourProfileService: TourProfileService) { }
 
   @Mutation(() => TourProfile)
-  createTourProfile(@Args('createTourProfileInput') createTourProfileInput: CreateTourProfileInput) {
+  createTourProfile(
+    @Args('createTourProfileInput')
+    createTourProfileInput: CreateTourProfileInput,
+  ) {
     return this.tourProfileService.create(createTourProfileInput);
   }
 
@@ -24,8 +27,12 @@ export class TourProfileResolver {
   }
 
   @Mutation(() => TourProfile)
-  updateTourProfile(@Args('updateTourProfileInput') updateTourProfileInput: UpdateTourProfileInput) {
-    return this.tourProfileService.update(updateTourProfileInput.id, updateTourProfileInput);
+  updateTourProfile(
+    @Args('id') id: number,
+    @Args('updateTourProfileInput')
+    updateTourProfileInput: UpdateTourProfileInput,
+  ) {
+    return this.tourProfileService.update(id, updateTourProfileInput);
   }
 
   @Mutation(() => TourProfile)

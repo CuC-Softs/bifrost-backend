@@ -21,13 +21,14 @@ import { LocationEntryModule } from './location-entry/location-entry.module';
 import { TextEntryModule } from './text-entry/text-entry.module';
 import { EntryModule } from './entry/entry.module';
 import { LogBookModule } from './log-book/log-book.module';
-
+import { GraphQLJSON } from 'graphql-type-json';
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ req }),
+      resolvers: { JSON: GraphQLJSON },
     }),
     MulterModule.register({
       dest: './tmp/uploads',
@@ -36,18 +37,18 @@ import { LogBookModule } from './log-book/log-book.module';
     AuthModule,
     SearchModule,
     MediaModule,
-    // RecommendationModule,
-    // ReportModule,
-    // CommentModule,
-    // VoteModule,
-    // ImageEntryModule,
-    // VideoEntryModule,
-    // LocationEntryModule,
-    // TextEntryModule,
-    // EntryModule,
-    // LogBookModule,
-    // TourModule,
-    // TourProfileModule,
+    RecommendationModule,
+    ReportModule,
+    CommentModule,
+    VoteModule,
+    ImageEntryModule,
+    VideoEntryModule,
+    LocationEntryModule,
+    TextEntryModule,
+    EntryModule,
+    LogBookModule,
+    TourModule,
+    TourProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

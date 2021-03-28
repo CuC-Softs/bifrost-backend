@@ -8,6 +8,23 @@ import {
 } from 'class-validator';
 @InputType()
 export class CreateTourInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  user_id: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  tour_profile_id: number;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  is_public: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 }

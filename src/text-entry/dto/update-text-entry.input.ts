@@ -12,9 +12,9 @@ import {
 export class UpdateTextEntryInput extends PartialType(CreateTextEntryInput) {
   @IsString()
   @IsOptional()
-  text: string;
+  text?: string;
 
   @IsInt()
   @IsOptional()
-  entry_fk: number;
+  entry_fk?: number;
 }

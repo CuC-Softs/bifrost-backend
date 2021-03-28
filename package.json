@@ -39,6 +39,7 @@
         "dotenv": "^8.2.0",
         "graphql": "^15.5.0",
         "graphql-tools": "^7.0.4",
+        "graphql-type-json": "^0.3.2",
         "graphql-upload": "^11.0.0",
         "nestjs-dataloader": "^7.0.1",
         "passport": "^0.4.1",

@@ -1,7 +1,19 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import {
+  IsBoolean,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 @InputType()
 export class CreateCommentInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsInt()
+  @IsNotEmpty()
+  comment_id: number;
+
+  @IsString()
+  @IsNotEmpty()
+  text: string;
 }

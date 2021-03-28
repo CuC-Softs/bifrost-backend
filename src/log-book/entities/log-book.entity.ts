@@ -1,7 +1,14 @@
 import { ObjectType } from '@nestjs/graphql';
 import { User } from 'src/user/user.entity';
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+@Entity({ name: 'log_books' })
 @ObjectType()
 export class LogBook {
   @PrimaryGeneratedColumn()
@@ -11,7 +18,7 @@ export class LogBook {
   name: string;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Column()
   description: string;

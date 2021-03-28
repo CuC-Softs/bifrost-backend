@@ -6,7 +6,7 @@ import { UpdateTourInput } from './dto/update-tour.input';
 
 @Resolver(() => Tour)
 export class TourResolver {
-  constructor(private readonly tourService: TourService) {}
+  constructor(private readonly tourService: TourService) { }
 
   @Mutation(() => Tour)
   createTour(@Args('createTourInput') createTourInput: CreateTourInput) {
@@ -24,8 +24,11 @@ export class TourResolver {
   }
 
   @Mutation(() => Tour)
-  updateTour(@Args('updateTourInput') updateTourInput: UpdateTourInput) {
-    return this.tourService.update(updateTourInput.id, updateTourInput);
+  updateTour(
+    @Args('id') id: number,
+    @Args('updateTourInput') updateTourInput: UpdateTourInput,
+  ) {
+    return this.tourService.update(id, updateTourInput);
   }
 
   @Mutation(() => Tour)

@@ -6,7 +6,7 @@ import { UpdateVoteInput } from './dto/update-vote.input';
 
 @Resolver(() => Vote)
 export class VoteResolver {
-  constructor(private readonly voteService: VoteService) {}
+  constructor(private readonly voteService: VoteService) { }
 
   @Mutation(() => Vote)
   createVote(@Args('createVoteInput') createVoteInput: CreateVoteInput) {
@@ -24,8 +24,11 @@ export class VoteResolver {
   }
 
   @Mutation(() => Vote)
-  updateVote(@Args('updateVoteInput') updateVoteInput: UpdateVoteInput) {
-    return this.voteService.update(updateVoteInput.id, updateVoteInput);
+  updateVote(
+    @Args('id') id: number,
+    @Args('updateVoteInput') updateVoteInput: UpdateVoteInput,
+  ) {
+    return this.voteService.update(id, updateVoteInput);
   }
 
   @Mutation(() => Vote)

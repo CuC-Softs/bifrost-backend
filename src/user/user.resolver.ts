@@ -8,6 +8,8 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
+import { LogBook } from 'src/log-book/entities/log-book.entity';
+import { LogBookService } from 'src/log-book/log-book.service';
 import Media from 'src/media/media.entity';
 import { MediaService } from 'src/media/media.service';
 import { CreateUserInput } from './dto/create-user.input';
@@ -20,6 +22,7 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(
     private userService: UserService,
+    private logBookService: LogBookService,
     private mediaService: MediaService,
   ) {
     return;
@@ -67,5 +70,10 @@ export class UserResolver {
     } catch (err) {
       return null;
     }
+  }
+
+  @ResolveField(() => LogBook)
+  async logBooks(@Parent() user: User): Promise<LogBook[]> {
+    return this.logBookService.findByUserId(user.uid);
   }
 }

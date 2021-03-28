@@ -27,12 +27,10 @@ export class VideoEntryResolver {
 
   @Mutation(() => VideoEntry)
   updateVideoEntry(
+    @Args('id') id: number,
     @Args('updateVideoEntryInput') updateVideoEntryInput: UpdateVideoEntryInput,
   ) {
-    return this.videoEntryService.update(
-      updateVideoEntryInput.id,
-      updateVideoEntryInput,
-    );
+    return this.videoEntryService.update(id, updateVideoEntryInput);
   }
 
   @Mutation(() => VideoEntry)

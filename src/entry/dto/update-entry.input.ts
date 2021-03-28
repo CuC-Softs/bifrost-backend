@@ -1,6 +1,7 @@
 import { InputType, PartialType } from '@nestjs/graphql';
 import {
   IsBoolean,
+  IsDate,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -13,4 +14,8 @@ export class UpdateEntryInput extends PartialType(CreateEntryInput) {
   @IsInt()
   @IsOptional()
   order_in_list?: number;
+
+  @IsDate()
+  @IsOptional()
+  date?: Date;
 }

@@ -6,30 +6,42 @@ import { UpdateLogBookInput } from './dto/update-log-book.input';
 
 @Resolver(() => LogBook)
 export class LogBookResolver {
-  constructor(private readonly logBookService: LogBookService) {}
+  constructor(private readonly logBookService: LogBookService) {
+    return;
+  }
 
   @Mutation(() => LogBook)
-  createLogBook(@Args('createLogBookInput') createLogBookInput: CreateLogBookInput) {
+  async createLogBook(
+    @Args('createLogBookInput') createLogBookInput: CreateLogBookInput,
+  ) {
     return this.logBookService.create(createLogBookInput);
   }
 
   @Query(() => [LogBook], { name: 'logBook' })
-  findAll() {
+  async findAll() {
     return this.logBookService.findAll();
   }
 
   @Query(() => LogBook, { name: 'logBook' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  async findOne(@Args('id', { type: () => Int }) id: number) {
     return this.logBookService.findOne(id);
   }
 
   @Mutation(() => LogBook)
-  updateLogBook(@Args('updateLogBookInput') updateLogBookInput: UpdateLogBookInput) {
-    return this.logBookService.update(updateLogBookInput.id, updateLogBookInput);
+  async updateLogBook(
+    @Args('id') id: number,
+    @Args('updateLogBookInput') updateLogBookInput: UpdateLogBookInput,
+  ) {
+    return this.logBookService.update(id, updateLogBookInput);
   }
 
-  @Mutation(() => LogBook)
-  removeLogBook(@Args('id', { type: () => Int }) id: number) {
-    return this.logBookService.remove(id);
+  @Mutation(() => Boolean)
+  async removeLogBook(@Args('id', { type: () => Int }) id: number) {
+    try {
+      await this.logBookService.remove(id);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }

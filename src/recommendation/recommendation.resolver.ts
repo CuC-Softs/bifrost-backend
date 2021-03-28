@@ -6,10 +6,15 @@ import { UpdateRecommendationInput } from './dto/update-recommendation.input';
 
 @Resolver(() => Recommendation)
 export class RecommendationResolver {
-  constructor(private readonly recommendationService: RecommendationService) {}
+  constructor(private readonly recommendationService: RecommendationService) {
+    return;
+  }
 
   @Mutation(() => Recommendation)
-  createRecommendation(@Args('createRecommendationInput') createRecommendationInput: CreateRecommendationInput) {
+  createRecommendation(
+    @Args('createRecommendationInput')
+    createRecommendationInput: CreateRecommendationInput,
+  ) {
     return this.recommendationService.create(createRecommendationInput);
   }
 
@@ -24,8 +29,12 @@ export class RecommendationResolver {
   }
 
   @Mutation(() => Recommendation)
-  updateRecommendation(@Args('updateRecommendationInput') updateRecommendationInput: UpdateRecommendationInput) {
-    return this.recommendationService.update(updateRecommendationInput.id, updateRecommendationInput);
+  updateRecommendation(
+    @Args('id') id: number,
+    @Args('updateRecommendationInput')
+    updateRecommendationInput: UpdateRecommendationInput,
+  ) {
+    return this.recommendationService.update(id, updateRecommendationInput);
   }
 
   @Mutation(() => Recommendation)
