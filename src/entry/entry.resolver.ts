@@ -54,10 +54,10 @@ export class EntryResolver {
     return this.entryService.update(id, updateEntryInput);
   }
 
-  @ResolveField(() => VideoEntry)
-  async video_entry(@Parent() user: Entry): Promise<VideoEntry[]> {
-    return this.videoEntryService.findOne();
-  }
+  // @ResolveField(() => VideoEntry)
+  // async video_entry(@Parent() user: Entry): Promise<VideoEntry[]> {
+  //   // return this.videoEntryService.findOne();
+  // }
 
   @Mutation(() => Boolean)
   async removeEntry(@Args('id', { type: () => Int }) id: number) {

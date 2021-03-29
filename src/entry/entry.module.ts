@@ -18,5 +18,6 @@ import { TextEntryModule } from 'src/text-entry/text-entry.module';
     LocationEntryModule,
   ],
   providers: [EntryResolver, EntryService],
+  exports: [EntryService],
 })
 export class EntryModule { }

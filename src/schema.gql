@@ -17,19 +17,21 @@ type LogBook {
   owner: User!
 }
 
+type Comment {
+  id: Float!
+  user_id: String!
+  message: String!
+  owner: User!
+  recomendation: Recommendation!
+}
+
 type Recommendation {
   id: Float!
   type: String!
   value: String!
   user_id: String!
   owner: User!
-}
-
-type Comment {
-  id: Float!
-  user_id: String!
-  message: String!
-  owner: User!
+  comments: [Comment!]!
 }
 
 type Report {
@@ -43,7 +45,6 @@ type Report {
 type TourProfile {
   values: JSON!
   id: Float!
-  tag_id: String!
   tour_id: Float!
   owner: Tour!
 }
@@ -52,43 +53,6 @@ type TourProfile {
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
-
-type Tour {
-  id: Float!
-  name: String!
-  user_id: String!
-  tour_profile_id: Float!
-  is_public: Boolean!
-  description: String!
-  owner: User!
-  tour_profiles: [TourProfile!]!
-}
-
-type User {
-  cover: Media
-  followersCount: Float!
-  uid: String!
-  name: String!
-  coverMedia: Float!
-  isPublic: Boolean!
-  followedUsers: [User!]!
-  logBooks: [LogBook!]!
-  recommendations: [Recommendation!]!
-  comments: [Comment!]!
-  reports: [Report!]!
-  tours: [Tour!]!
-}
-
-type AuthType {
-  user: User!
-  token: String!
-}
-
-type Vote {
-  id: Float!
-  user_id: String!
-  is_public: Boolean!
-}
 
 type VideoEntry {
   id: Float!
@@ -102,6 +66,15 @@ type TextEntry {
   id: Float!
   text: String!
   entry_id: Float!
+  entry: Entry!
+}
+
+type ImageEntry {
+  id: Float!
+  media_id: Float!
+  location: String!
+  entry_id: Float!
+  image: Media!
   entry: Entry!
 }
 
@@ -120,6 +93,7 @@ type Entry {
   text_entry: TextEntry!
   image_entry: ImageEntry!
   location_entry: LocationEntry!
+  tour: Tour!
 }
 
 """
@@ -127,13 +101,44 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type ImageEntry {
+type Tour {
   id: Float!
-  media_id: Float!
-  location: String!
-  entry_id: Float!
-  image: Media!
-  entry: Entry!
+  name: String!
+  user_id: String!
+  tour_profile_id: Float!
+  is_public: Boolean!
+  description: String!
+  owner: User!
+  tour_profiles: [TourProfile!]!
+  entries: [Entry!]!
+}
+
+type Vote {
+  id: Float!
+  user_id: String!
+  is_public: Boolean!
+  owner: User!
+}
+
+type User {
+  cover: Media
+  followersCount: Float!
+  uid: String!
+  name: String!
+  coverMedia: Float!
+  isPublic: Boolean!
+  followedUsers: [User!]!
+  logBooks: [LogBook!]!
+  recommendations: [Recommendation!]!
+  comments: [Comment!]!
+  reports: [Report!]!
+  tours: [Tour!]!
+  votes: [Vote!]!
+}
+
+type AuthType {
+  user: User!
+  token: String!
 }
 
 type Query {
@@ -144,12 +149,12 @@ type Query {
   comment(id: Int!): Comment!
   report(id: Int!): Report!
   tour(id: Int!): Tour!
-  vote(id: Int!): Vote!
-  imageEntry(id: Int!): ImageEntry!
-  videoEntry(id: Int!): VideoEntry!
-  locationEntry(id: Int!): LocationEntry!
-  textEntry(id: Int!): TextEntry!
   entry(id: Int!): Entry!
+  videoEntry(id: Int!): VideoEntry!
+  textEntry(id: Int!): TextEntry!
+  imageEntry(id: Int!): ImageEntry!
+  locationEntry(id: Int!): LocationEntry!
+  vote(id: Int!): Vote!
   tourProfile(id: Int!): TourProfile!
 }
 
@@ -173,25 +178,25 @@ type Mutation {
   createTour(createTourInput: CreateTourInput!): Tour!
   updateTour(updateTourInput: UpdateTourInput!, id: Float!): Tour!
   removeTour(id: Int!): Tour!
+  createEntry(createEntryInput: CreateEntryInput!): Entry!
+  updateEntry(updateEntryInput: UpdateEntryInput!, id: Float!): Entry!
+  removeEntry(id: Int!): Boolean!
+  createVideoEntry(createVideoEntryInput: CreateVideoEntryInput!): VideoEntry!
+  updateVideoEntry(updateVideoEntryInput: UpdateVideoEntryInput!, id: Float!): VideoEntry!
+  removeVideoEntry(id: Int!): VideoEntry!
+  createTextEntry(createTextEntryInput: CreateTextEntryInput!): TextEntry!
+  updateTextEntry(updateTextEntryInput: UpdateTextEntryInput!, id: Float!): TextEntry!
+  removeTextEntry(id: Int!): TextEntry!
+  createImageEntry(createImageEntryInput: CreateImageEntryInput!): ImageEntry!
+  updateImageEntry(updateImageEntryInput: UpdateImageEntryInput!, id: Float!): ImageEntry!
+  removeImageEntry(id: Int!): ImageEntry!
+  createLocationEntry(createLocationEntryInput: CreateLocationEntryInput!): LocationEntry!
+  updateLocationEntry(updateLocationEntryInput: UpdateLocationEntryInput!, id: Float!): LocationEntry!
+  removeLocationEntry(id: Int!): LocationEntry!
   login(data: AuthInput!): AuthType!
   createVote(createVoteInput: CreateVoteInput!): Vote!
   updateVote(updateVoteInput: UpdateVoteInput!, id: Float!): Vote!
   removeVote(id: Int!): Vote!
-  createImageEntry(createImageEntryInput: CreateImageEntryInput!): ImageEntry!
-  updateImageEntry(updateImageEntryInput: UpdateImageEntryInput!, id: Float!): ImageEntry!
-  removeImageEntry(id: Int!): ImageEntry!
-  createVideoEntry(createVideoEntryInput: CreateVideoEntryInput!): VideoEntry!
-  updateVideoEntry(updateVideoEntryInput: UpdateVideoEntryInput!, id: Float!): VideoEntry!
-  removeVideoEntry(id: Int!): VideoEntry!
-  createLocationEntry(createLocationEntryInput: CreateLocationEntryInput!): LocationEntry!
-  updateLocationEntry(updateLocationEntryInput: UpdateLocationEntryInput!, id: Float!): LocationEntry!
-  removeLocationEntry(id: Int!): LocationEntry!
-  createTextEntry(createTextEntryInput: CreateTextEntryInput!): TextEntry!
-  updateTextEntry(updateTextEntryInput: UpdateTextEntryInput!, id: Float!): TextEntry!
-  removeTextEntry(id: Int!): TextEntry!
-  createEntry(createEntryInput: CreateEntryInput!): Entry!
-  updateEntry(updateEntryInput: UpdateEntryInput!, id: Float!): Entry!
-  removeEntry(id: Int!): Boolean!
   createTourProfile(createTourProfileInput: CreateTourProfileInput!): TourProfile!
   updateTourProfile(updateTourProfileInput: UpdateTourProfileInput!, id: Float!): TourProfile!
   removeTourProfile(id: Int!): TourProfile!
@@ -276,6 +281,60 @@ input UpdateTourInput {
   description: String
 }
 
+input CreateEntryInput {
+  order_in_list: Float!
+  date: DateTime!
+}
+
+input UpdateEntryInput {
+  order_in_list: Float
+  date: DateTime
+}
+
+input CreateVideoEntryInput {
+  media_id: Float!
+  entry_id: Float!
+  location: String!
+}
+
+input UpdateVideoEntryInput {
+  media_id: Float
+  entry_id: Float
+  location: String
+}
+
+input CreateTextEntryInput {
+  text: String!
+  entry_id: Float!
+}
+
+input UpdateTextEntryInput {
+  text: String
+  entry_id: Float
+}
+
+input CreateImageEntryInput {
+  media_id: Float!
+  location: String!
+  entry_id: Float!
+}
+
+input UpdateImageEntryInput {
+  media_id: Float
+  location: String
+  entry_id: Float
+}
+
+input CreateLocationEntryInput {
+  location: String!
+  entry_id: Float!
+}
+
+input UpdateLocationEntryInput {
+  location: String
+  entry_id: Float
+}
+
 input AuthInput {
   email: String!
   password: String!
@@ -291,66 +350,12 @@ input UpdateVoteInput {
   is_public: Boolean
 }
 
-input CreateImageEntryInput {
-  media_id: Float!
-  location: String!
-  entry_id: Float!
-}
-
-input UpdateImageEntryInput {
-  media_id: Float
-  location: String
-  entry_id: Float
-}
-
-input CreateVideoEntryInput {
-  media_id: Float!
-  entry_id: Float!
-  location: String!
-}
-
-input UpdateVideoEntryInput {
-  media_id: Float
-  entry_id: Float
-  location: String
-}
-
-input CreateLocationEntryInput {
-  location: String!
-  entry_id: Float!
-}
-
-input UpdateLocationEntryInput {
-  location: String
-  entry_id: Float
-}
-
-input CreateTextEntryInput {
-  text: String!
-  entry_id: Float!
-}
-
-input UpdateTextEntryInput {
-  text: String
-  entry_id: Float
-}
-
-input CreateEntryInput {
-  order_in_list: Float!
-  date: DateTime!
-}
-
-input UpdateEntryInput {
-  order_in_list: Float
-  date: DateTime
-}
-
 input CreateTourProfileInput {
-  tag_id: String!
+  values: JSON!
   tour_id: Float!
 }
 
 input UpdateTourProfileInput {
-  tag_id: String
+  values: JSON
   tour_id: Float
 }

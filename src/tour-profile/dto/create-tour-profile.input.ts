@@ -6,9 +6,14 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import JSONa from 'graphql-type-json';
+
 @InputType()
 export class CreateTourProfileInput {
   @IsInt()
   @IsNotEmpty()
   tour_id: number;
+
+  @Field(() => JSONa)
+  values: JSON;
 }

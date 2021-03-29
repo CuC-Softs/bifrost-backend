@@ -2,18 +2,23 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  forwardRef,
+  Inject,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { FollowsService } from './follows/follows.service';
+import { CommentService } from 'src/comment/comment.service';
 import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @Inject(forwardRef(() => CommentService))
+    private commentService: CommentService,
   ) {
     return;
   }

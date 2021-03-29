@@ -22,6 +22,7 @@ import { TextEntryModule } from './text-entry/text-entry.module';
 import { EntryModule } from './entry/entry.module';
 import { LogBookModule } from './log-book/log-book.module';
 import { GraphQLJSON } from 'graphql-type-json';
+import { TagModule } from './tag/tag.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
@@ -49,6 +50,7 @@ import { GraphQLJSON } from 'graphql-type-json';
     LogBookModule,
     TourModule,
     TourProfileModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [AppService],

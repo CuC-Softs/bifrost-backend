@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import JSONa from 'graphql-type-json';
 @InputType()
 export class UpdateTourProfileInput extends PartialType(
   CreateTourProfileInput,
@@ -14,4 +15,7 @@ export class UpdateTourProfileInput extends PartialType(
   @IsInt()
   @IsOptional()
   tour_id?: number;
+
+  @Field(() => JSONa)
+  values?: JSON;
 }

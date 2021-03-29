@@ -1,12 +1,29 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { TourService } from './tour.service';
 import { Tour } from './entities/tour.entity';
 import { CreateTourInput } from './dto/create-tour.input';
 import { UpdateTourInput } from './dto/update-tour.input';
+import { Entry } from 'src/entry/entities/entry.entity';
+import { EntryService } from 'src/entry/entry.service';
+import { User } from 'src/user/user.entity';
+import { LogBook } from 'src/log-book/entities/log-book.entity';
+import { UserService } from 'src/user/user.service';
 
 @Resolver(() => Tour)
 export class TourResolver {
-  constructor(private readonly tourService: TourService) { }
+  constructor(
+    private readonly tourService: TourService,
+    private entryService: EntryService,
+    private userService: UserService,
+  ) { }
 
   @Mutation(() => Tour)
   createTour(@Args('createTourInput') createTourInput: CreateTourInput) {
@@ -29,6 +46,16 @@ export class TourResolver {
     @Args('updateTourInput') updateTourInput: UpdateTourInput,
   ) {
     return this.tourService.update(id, updateTourInput);
+  }
+
+  @ResolveField(() => Entry)
+  entries(@Parent() tour: Tour): Promise<Entry[]> {
+    return this.entryService.findByTourId(tour.id);
+  }
+
+  @ResolveField(() => User)
+  async owner(@Parent() logBook: LogBook): Promise<User> {
+    return this.userService.getUser(logBook.user_id);
   }
 
   @Mutation(() => Tour)

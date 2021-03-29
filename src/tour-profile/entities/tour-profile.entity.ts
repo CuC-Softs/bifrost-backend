@@ -14,7 +14,6 @@ import {
 } from 'typeorm';
 
 import JSONa from 'graphql-type-json';
-import { Tour } from 'src/tour/entities/tour.entity';
 @ObjectType()
 @Entity({ name: 'tour_profiles' })
 export class TourProfile {

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResolver } from './user.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,9 +23,6 @@ import { TourModule } from 'src/tour/tour.module';
     TourModule,
   ],
   providers: [UserService, UserResolver, FollowsService, FollowsResolver],
+  exports: [UserService],
 })
-export class UserModule {
-  constructor() {
-    return;
-  }
-}
+export class UserModule { }
