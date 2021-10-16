@@ -35,14 +35,14 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  async indexUsers(): Promise<User[]> {
+  async users(): Promise<User[]> {
     const users = await this.userService.indexUsers();
     return users;
   }
 
   @UseGuards(GqlAuthGuard)
   @Query(() => User, { nullable: true })
-  async getUser(@Args('id') id: string): Promise<User> {
+  async user(@Args('id') id: string): Promise<User> {
     const user = await this.userService.getUser(id);
     return user;
   }

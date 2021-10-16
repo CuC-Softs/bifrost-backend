@@ -1,4 +1,4 @@
-import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { LogBook } from 'src/log-book/entities/log-book.entity';
 import Media from 'src/media/media.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
