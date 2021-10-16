@@ -17,8 +17,6 @@ import { User } from './user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @Inject(forwardRef(() => CommentService))
-    private commentService: CommentService,
   ) {
     return;
   }

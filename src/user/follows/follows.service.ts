@@ -12,7 +12,7 @@ export class FollowsService {
     return;
   }
   async getFollowersCount(id: string): Promise<number> {
-    const [a, count] = await this.userRepository
+    const [, count] = await this.userRepository
       .createQueryBuilder('user')
       .innerJoin('user.followedUsers', 'f')
       .where('user.uid = :id', { id })
@@ -23,8 +23,8 @@ export class FollowsService {
   }
 
   async getFollowers(id: string): Promise<User[]> {
-    const users = await this.conn
-      .createQueryBuilder()
+    const users = await this.userRepository
+      .createQueryBuilder('user')
       .relation(User, 'followedUsers')
       .of(id)
       .loadMany<User>();
@@ -47,6 +47,5 @@ export class FollowsService {
 
       throw new BadRequestException('user not found');
     }
-    return false;
   }
 }

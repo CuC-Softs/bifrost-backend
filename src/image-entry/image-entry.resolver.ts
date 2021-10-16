@@ -6,7 +6,9 @@ import { UpdateImageEntryInput } from './dto/update-image-entry.input';
 
 @Resolver(() => ImageEntry)
 export class ImageEntryResolver {
-  constructor(private readonly imageEntryService: ImageEntryService) { }
+  constructor(private readonly imageEntryService: ImageEntryService) {
+    return;
+  }
 
   @Mutation(() => ImageEntry)
   createImageEntry(

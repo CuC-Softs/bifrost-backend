@@ -16,10 +16,7 @@ import { UserService } from 'src/user/user.service';
 
 @Resolver(() => Comment)
 export class CommentResolver {
-  constructor(
-    private readonly commentService: CommentService,
-    private readonly userService: UserService,
-  ) {
+  constructor(private readonly commentService: CommentService) {
     return;
   }
 
@@ -38,11 +35,6 @@ export class CommentResolver {
   @Query(() => Comment, { name: 'comment' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.commentService.findOne(id);
-  }
-
-  @ResolveField(() => User)
-  async owner(@Parent() user: User): Promise<User> {
-    return await this.userService.getUser(user.uid);
   }
 
   @Mutation(() => Comment)

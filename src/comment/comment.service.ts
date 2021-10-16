@@ -16,8 +16,6 @@ export class CommentService {
   constructor(
     @InjectRepository(Comment)
     private commentRepository: Repository<Comment>,
-    @Inject(forwardRef(() => UserService))
-    private userService: UserService,
   ) {
     return;
   }
